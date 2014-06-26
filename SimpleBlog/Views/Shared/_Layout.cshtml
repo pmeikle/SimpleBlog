@@ -1,4 +1,5 @@
 ﻿@using System.Activities.Statements
+@using System.Web.Optimization
 @{
     Layout = null;
 }
@@ -9,11 +10,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - Simple Blog</title>
+    @Styles.Render("~/styles")
 </head>
     <body>
         <header>
             <h1>
                 <a href="@Url.RouteUrl("home")">Simple Blog</a>
+                <i class="glyphicon glyphicon-bell"></i>
             </h1>
             
             @if (User.Identity.IsAuthenticated)
@@ -38,6 +41,7 @@
             &copy; @DateTime.UtcNow.Year - Pierce Meikle
         </footer>
         
+        @Scripts.Render("~/scripts");
         @RenderSection("Scripts", false)
     </body>
 </html>
