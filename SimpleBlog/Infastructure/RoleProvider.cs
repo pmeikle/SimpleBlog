@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SimpleBlog.Infastructure
 {
@@ -9,9 +7,7 @@ namespace SimpleBlog.Infastructure
     {
         public override string[] GetRolesForUser(string username)
         {
-            if(username == "pmeikle")
-                return new[] {"admin"};
-            return new string[] {};
+            return Auth.User.Roles.Select(role => role.Name).ToArray();
         }
 
         public override bool IsUserInRole(string username, string roleName)
