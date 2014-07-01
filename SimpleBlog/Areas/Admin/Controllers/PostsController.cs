@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using NHibernate.Linq;
@@ -86,6 +87,45 @@ namespace SimpleBlog.Areas.Admin.Controllers
 
             Database.Session.SaveOrUpdate(post);
 
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Trash(int id)
+        {
+            var post = Database.Session.Load<Post>(id);
+
+            if (post == null)
+                return HttpNotFound();
+
+            post.DeletedAt = DateTime.UtcNow;
+            Database.Session.Update(post);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            var post = Database.Session.Load<Post>(id);
+
+            if (post == null)
+                return HttpNotFound();
+
+            Database.Session.Delete(post);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Restore(int id)
+        {
+            Debug.Write("This is being reached");
+            var post = Database.Session.Load<Post>(id);
+
+            if (post == null)
+                return HttpNotFound();
+
+            post.DeletedAt = null;
+            Database.Session.Update(post);
             return RedirectToAction("Index");
         }
     }
