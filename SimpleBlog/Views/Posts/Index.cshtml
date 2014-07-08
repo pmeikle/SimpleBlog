@@ -1,6 +1,7 @@
-﻿@{
+﻿@model SimpleBlog.ViewModels.PostsIndex
+
+@{
     ViewBag.Title = "Posts";
 }
-<p>
-    This is the homepage. Enjoy it!
-</p>
+
+@Html.Partial("_Posts", Model.Posts)
